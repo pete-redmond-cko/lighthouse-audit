@@ -1,18 +1,16 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {generateReport} from './lighthouse'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const url = core.getInput('url', {required: true})
+    const psiKey = core.getInput('page-speed-insights-key', {
+      required: true
+    })
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    await generateReport({url, psiKey})
+  } catch (err) {
+    core.setFailed(`Action failed with error ${err}`)
   }
 }
 

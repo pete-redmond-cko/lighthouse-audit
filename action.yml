@@ -1,11 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'peter.redmond@checkout.com'
+description: 'Github action to run a lighthouse audit'
+author: 'peter.redmond@checkout.com'
 inputs:
-  milliseconds: # change this
+  page-speed-insights-key:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'PageSpeed Insights API key'
+  url:
+    required: true
+    description: 'URL to run lighthouse score against'
 runs:
   using: 'node16'
   main: 'dist/index.js'
