@@ -20,7 +20,7 @@ export const generateReport = async ({url, psiKey}: Options): Promise<void> => {
     })
 
     const report = ReportGenerator.generateReportHtml(data.lighthouseResult)
-    const reportName = createReportName(url)
+    const reportName = `./reports/${createReportName(url)}`
 
     await fs.writeFile(reportName, report, 'utf8')
   } catch (err) {
