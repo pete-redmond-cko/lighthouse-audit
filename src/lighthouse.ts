@@ -19,9 +19,11 @@ export const generateReport = async ({url, psiKey}: Options): Promise<void> => {
       key: psiKey
     })
 
+    const dir = './reports'
     const report = ReportGenerator.generateReportHtml(data.lighthouseResult)
-    const reportName = `./reports/${createReportName(url)}`
+    const reportName = `${dir}/${createReportName(url)}`
 
+    await fs.mkdir(dir)
     await fs.writeFile(reportName, report, 'utf8')
   } catch (err) {
     setFailed(`Action failed with error ${err}`)
