@@ -7,6 +7,7 @@ import ReportGenerator from 'lighthouse/report/generator/report-generator'
 import psi from 'psi'
 import {createReportName} from './utils'
 import {generateSlackMessage} from './slack'
+import * as core from '@actions/core'
 
 interface Options {
   url: string
@@ -29,7 +30,11 @@ export const generateReport = async ({
     const report = ReportGenerator.generateReportHtml(data.lighthouseResult)
     const filename = createReportName(url)
     const reportName = `${dir}/${filename}`
+
     const hostedFileUrl = `${normalisePrefix(reportPrefix)}/${filename}`
+
+    core.info(reportPrefix)
+    core.info(hostedFileUrl)
 
     try {
       await fs.mkdir(dir)
