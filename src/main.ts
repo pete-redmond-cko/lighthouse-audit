@@ -3,15 +3,30 @@ import {generateReport} from './lighthouse'
 
 async function run(): Promise<void> {
   try {
-    const url = core.getInput('url', {required: true})
-    const psiKey = core.getInput('page-speed-insights-key', {
-      required: true
+    const {url, psiKey, reportPrefix} = getInputs()
+
+    const messagePayload = await generateReport({
+      url,
+      psiKey,
+      reportPrefix
     })
 
-    await generateReport({url, psiKey})
+    core.setOutput('slack-message-payload', messagePayload)
   } catch (err) {
     core.setFailed(`Action failed with error ${err}`)
   }
+}
+
+const getInputs = (): {url: string; psiKey: string; reportPrefix: string} => {
+  const url = core.getInput('url', {required: true})
+  const psiKey = core.getInput('page-speed-insights-key', {
+    required: true
+  })
+  const reportPrefix = core.getInput('report-prefix', {
+    required: true
+  })
+
+  return {url, psiKey, reportPrefix}
 }
 
 run()

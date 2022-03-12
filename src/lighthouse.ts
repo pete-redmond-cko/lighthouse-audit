@@ -6,13 +6,19 @@ import {setFailed} from '@actions/core'
 import ReportGenerator from 'lighthouse/report/generator/report-generator'
 import psi from 'psi'
 import {createReportName} from './utils'
+import {generateSlackMessage} from './slack'
 
 interface Options {
   url: string
   psiKey: string
+  reportPrefix: string
 }
 
-export const generateReport = async ({url, psiKey}: Options): Promise<void> => {
+export const generateReport = async ({
+  url,
+  psiKey,
+  reportPrefix
+}: Options): Promise<Object | undefined> => {
   try {
     const {data} = await psi(url, {
       strategy: 'desktop',
@@ -21,11 +27,25 @@ export const generateReport = async ({url, psiKey}: Options): Promise<void> => {
 
     const dir = './reports'
     const report = ReportGenerator.generateReportHtml(data.lighthouseResult)
-    const reportName = `${dir}/${createReportName(url)}`
+    const filename = createReportName(url)
+    const reportName = `${dir}/${filename}`
+    const hostedFileUrl = `${normalisePrefix(reportPrefix)}/${filename}`
 
-    await fs.mkdir(dir)
+    try {
+      await fs.mkdir(dir)
+    } catch {
+      // eslint-disable-next-line no-console
+      console.log(`${dir} exists`)
+    }
+
     await fs.writeFile(reportName, report, 'utf8')
+
+    return generateSlackMessage(data, hostedFileUrl)
   } catch (err) {
     setFailed(`Action failed with error ${err}`)
   }
+}
+
+const normalisePrefix = (str: string): string => {
+  return str.endsWith('/') ? str.substr(0, str.length - 1) : str
 }

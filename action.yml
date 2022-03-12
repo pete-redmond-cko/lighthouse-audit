@@ -8,6 +8,12 @@ inputs:
   url:
     required: true
     description: 'URL to run lighthouse score against'
+  report-prefix:
+    required: true
+    description: 'URL where reports are hosted'
+outputs:
+  slack-message-payload: 
+    description: 'Slack message payload'
 runs:
   using: 'node16'
   main: 'dist/index.js'
