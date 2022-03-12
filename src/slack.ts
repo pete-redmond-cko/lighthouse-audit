@@ -7,7 +7,9 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
       createSection([
         {
           title: 'Url',
-          value: `<${data.lighthouseResult.requestedUrl}|${data.lighthouseResult.requestedUrl}>`
+          value: `<${addProtocol(
+            data.lighthouseResult.requestedUrl
+          )}|${addProtocol(data.lighthouseResult.requestedUrl)}>`
         },
         {
           title: 'Timestamp',
@@ -43,7 +45,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
         fields: [
           {
             type: 'mrkdwn',
-            text: `<${reportUrl}|View full report>`
+            text: `<${addProtocol(reportUrl)}|View full report>`
           }
         ]
       }
@@ -103,4 +105,8 @@ const getEmoji = (score: number): string => {
   }
 
   return emoji
+}
+
+const addProtocol = (str: string): string => {
+  return `https://${str}`
 }

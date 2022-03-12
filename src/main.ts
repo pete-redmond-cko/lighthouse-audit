@@ -6,9 +6,9 @@ async function run(): Promise<void> {
     const {url, psiKey, reportPrefix} = getInputs()
 
     const messagePayload = await generateReport({
-      url: addProtocol(url),
+      url,
       psiKey,
-      reportPrefix: addProtocol(reportPrefix)
+      reportPrefix
     })
 
     core.setOutput(
@@ -30,10 +30,6 @@ const getInputs = (): {url: string; psiKey: string; reportPrefix: string} => {
   })
 
   return {url, psiKey, reportPrefix}
-}
-
-const addProtocol = (str: string): string => {
-  return `https://${str}`
 }
 
 run()
