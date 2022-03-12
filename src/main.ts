@@ -11,7 +11,10 @@ async function run(): Promise<void> {
       reportPrefix
     })
 
-    core.setOutput('slack-message-payload', messagePayload)
+    core.setOutput(
+      'slack-message-payload',
+      JSON.stringify(messagePayload, null, 2)
+    )
   } catch (err) {
     core.setFailed(`Action failed with error ${err}`)
   }
