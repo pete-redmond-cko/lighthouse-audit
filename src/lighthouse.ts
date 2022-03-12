@@ -7,6 +7,7 @@ import ReportGenerator from 'lighthouse/report/generator/report-generator'
 import psi from 'psi'
 import {createReportName} from './utils'
 import {generateSlackMessage} from './slack'
+import * as core from '@actions/core'
 
 interface Options {
   url: string
@@ -19,6 +20,11 @@ export const generateReport = async ({
   psiKey,
   reportPrefix
 }: Options): Promise<Object | undefined> => {
+  core.info(`🚀 ~ file: lighthouse.ts ~ line 23 ~ url, ${url}`)
+  core.info(
+    `🚀 ~ file: lighthouse.ts ~ line 23 ~ reportPrefix, ${reportPrefix}`
+  )
+
   try {
     const {data} = await psi(url, {
       strategy: 'desktop',
