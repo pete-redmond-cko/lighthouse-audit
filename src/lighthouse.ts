@@ -7,7 +7,6 @@ import ReportGenerator from 'lighthouse/report/generator/report-generator'
 import psi from 'psi'
 import {createReportName} from './utils'
 import {generateSlackMessage} from './slack'
-import * as core from '@actions/core'
 
 interface Options {
   url: string

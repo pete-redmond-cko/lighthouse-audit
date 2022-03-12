@@ -5,11 +5,6 @@ async function run(): Promise<void> {
   try {
     const {url, psiKey, reportPrefix} = getInputs()
 
-    core.info('before')
-    core.info(url)
-    core.info(addProtocol(url))
-    core.info('after')
-
     const messagePayload = await generateReport({
       url: addProtocol(url),
       psiKey,
