@@ -33,9 +33,6 @@ export const generateReport = async ({
 
     const hostedFileUrl = `${normalisePrefix(reportPrefix)}/${filename}`
 
-    core.info(reportPrefix)
-    core.info(hostedFileUrl)
-
     try {
       await fs.mkdir(dir)
     } catch {
