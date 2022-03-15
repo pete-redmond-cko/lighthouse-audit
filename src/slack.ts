@@ -4,6 +4,15 @@ import {format} from 'date-fns'
 export const generateSlackMessage = (data: any, reportUrl: string): Object => {
   return {
     blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: 'Lighthouse report',
+          emoji: true
+        }
+      },
+      createDivider(),
       createSection([
         {
           title: 'Url',
