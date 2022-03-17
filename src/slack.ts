@@ -20,7 +20,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
       createSection([
         {
           title: 'Url',
-          value: `<${data.lighthouseResult.requestedUrl}|data.lighthouseResult.requestedUrl}>`
+          value: `<${data.lighthouseResult.requestedUrl}|${data.lighthouseResult.requestedUrl}>`
         },
         {
           title: 'Timestamp',
@@ -36,7 +36,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
           title: data.lighthouseResult.categories.performance.title,
           value: `${getEmoji(
             data.lighthouseResult.categories.performance.score
-          )} \`${data.lighthouseResult.categories.performance * 100}\``
+          )} \`${data.lighthouseResult.categories.performance.score * 100}\``
         }
       ]),
       createSection([
