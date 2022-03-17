@@ -36,7 +36,9 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
           title: data.lighthouseResult.categories.performance.title,
           value: `${getEmoji(
             data.lighthouseResult.categories.performance.score
-          )} \`${data.lighthouseResult.categories.performance.score * 100}\``
+          )} \`${Math.round(
+            data.lighthouseResult.categories.performance.score * 100
+          )}\``
         }
       ]),
       createSection([
