@@ -20,9 +20,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
       createSection([
         {
           title: 'Url',
-          value: `<${addProtocol(
-            data.lighthouseResult.requestedUrl
-          )}|${addProtocol(data.lighthouseResult.requestedUrl)}>`
+          value: `<${data.lighthouseResult.requestedUrl}|data.lighthouseResult.requestedUrl}>`
         },
         {
           title: 'Timestamp',
@@ -38,7 +36,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
           title: data.lighthouseResult.categories.performance.title,
           value: `${getEmoji(
             data.lighthouseResult.categories.performance.score
-          )} \`${data.lighthouseResult.categories.performance.score}\``
+          )} \`${data.lighthouseResult.categories.performance * 100}\``
         }
       ]),
       createSection([
@@ -58,7 +56,7 @@ export const generateSlackMessage = (data: any, reportUrl: string): Object => {
         fields: [
           {
             type: 'mrkdwn',
-            text: `<${addProtocol(reportUrl)}|View full report>`
+            text: `<${reportUrl}|View full report>`
           }
         ]
       }
@@ -120,9 +118,9 @@ const getEmoji = (score: number): string => {
   return emoji
 }
 
-const addProtocol = (str: string): string => {
-  return `https://${str}`
-}
+// const addProtocol = (str: string): string => {
+//   return `https://${str}`
+// }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createTextDescription = ({data, url}: any): string => {
