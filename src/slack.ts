@@ -3,6 +3,10 @@ import {format} from 'date-fns'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const generateSlackMessage = (data: any, reportUrl: string): Object => {
   return {
+    text: createTextDescription({
+      data,
+      url: reportUrl
+    }),
     blocks: [
       {
         type: 'header',
@@ -118,4 +122,9 @@ const getEmoji = (score: number): string => {
 
 const addProtocol = (str: string): string => {
   return `https://${str}`
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createTextDescription = ({data, url}: any): string => {
+  return `Lighthouse report for ${url}. Performance: ${data.lighthouseResult.categories.performance.score}`
 }
